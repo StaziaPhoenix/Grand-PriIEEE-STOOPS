@@ -1,0 +1,15 @@
+TestPlan
+Undated, vaguely ordered.
+
+1) Configure Staz-Pi for openCV stuff, so we have two functional processors.
+
+2) Test ImageAalyze stuff for error detection
+		+	Estimate pixel to centimeter conversion based on our webcam, see
+			if estimate yields results within our tolerance.
+		+	Decide on a height and downward angle at which to mount the webcam
+			on the car - once these are decided, we have two less unknowns
+			to test.
+		+	For each calibration attempt (currently, only one in queue is
+			px -> cm conversion), record returned angle and holistic accuracy.
+
+3) Encode the and and motor level for sending to the Arduino.
