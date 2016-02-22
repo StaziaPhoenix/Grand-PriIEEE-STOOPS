@@ -1,5 +1,8 @@
 TestPlan
-Undated, vaguely ordered.
+Undated, unordered
+
+--------------------------------------------------------------------------------
+A Working Car
 
 1) Configure Staz-Pi for openCV stuff, so we have two functional processors.
 
@@ -12,4 +15,30 @@ Undated, vaguely ordered.
 		+	For each calibration attempt (currently, only one in queue is
 			px -> cm conversion), record returned angle and holistic accuracy.
 
-3) Encode the and and motor level for sending to the Arduino.
+3) Encode the angle and motor level for sending to the Arduino.
+		+	Assume only 4 states for motor level - define them in Arduino and
+			use 2 i2c bits to indicate which of them to use
+		+	remaining 6 bits for angle. On arduino side, append 2 0s to the LSB
+			to push the value into angles that we will use. Need to determine
+			exactly how I will encode those 6 bits on Pi side.
+
+4) After 2 and 3 complete, add edge cases to errordetect() and drivetest.cpp
+		+	if appears to be both right and left turn, assume intertestion and
+			standby for next frame
+		+	if detected edges wider than difference between rightmargin and 
+			leftmargin AND left edge is less than leftmargin, cut to emergency
+			scanline
+							OR
+			set default angle offset from vertical to respond to jagged case
+		+	if detected edges wider than difference between rightmargin and 
+			leftmargin AND right edge is greater than rightmargin, cut to 
+			emergency scanline
+							OR
+			set default angle offset from vertical to respond to jagged case
+
+----------------------------------------------------------------------------------
+An Optimized Car
+
+1) Add in speed control to allow for highest safe setting based on track
+		+ Recognize turns and slow for them
+		+ Recognize apex of turn and accelerate at that point
