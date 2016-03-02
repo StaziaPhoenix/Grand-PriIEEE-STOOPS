@@ -59,9 +59,6 @@ int main() {
         }
         usleep(1000000);
 
-        /* ----------------
-         * Kill Flag stuff. Will not implement until the car works.
-         * ---------------- */
         // if (read(file, killFlag, 1) != 1) {
         //     fprintf(stderr, "I2C: Failed to read interrupt from slave 0x%x\n");
         // }
