@@ -6,14 +6,6 @@
 using namespace std;
 using namespace cv;
 
-
-int dist = 24*tan(45);  // trash value. dist of scanline from car is
-                        // h*tan(theta), where h is camera height from 
-                        // ground (cm) and theta is camera angle from vertical.
-                        // However, this yields in cm and is compared with
-                        // # of pixels. How should we convert between px and cm?
-                        // TODO Check webcam resolution, do rough & test estimate
-
 bool ImageAnalyze::thresholdImage(){
     bool bSuccess = cap.read(imgOriginal);
 
@@ -50,7 +42,7 @@ bool ImageAnalyze::analyzeImg(int & rightline, int & leftline) {
     //problematic when line start before left or after right edge. think about 
     //this later
     for(int i = 0; i < ( imgThresholded.cols - 1); ++i){ 
-        cout << i << endl;
+        //cout << i << endl;
         if((!firstdetect || !seconddetect) && (ptr[i] - ptr[i+1]) ){
             if( !firstdetect ){
                 rightline = i + 1;
@@ -79,7 +71,7 @@ bool ImageAnalyze::analyzeImg(int & rightline, int & leftline) {
             imwrite("edges.png", imgThresholded);
             imwrite("capture.png", imgOriginal);
     
-    cout << "bro" << endl;    
+    //cout << "bro" << endl;    
 
     return firstdetect && seconddetect;    
 }
@@ -88,18 +80,19 @@ bool ImageAnalyze::analyzeImg(int & rightline, int & leftline) {
  *	Stazia edited to return the correction angle. 
  *	See notes on dist above.
  * ------------------------------ */
-short ImageAnalyze::errorDetect(){
+unsigned char ImageAnalyze::errorDetect(){
 
     thresholdImage();
     analyzeImg(rightlinedetect, leftlinedetect);
     
     int centerline = (leftlinedetect + rightlinedetect)/2;
+    int temp = centerline - centermargin;
     if( centerline == centermargin ){
-        return 0;
+        return 90;
     }else if( centerline < centermargin ){
-        return 90-atan((centerline - centermargin)/dist); // see global dist comment
+        return 90-(atan(((temp*1.25)/((rightmargin-centermargin)*dist)))*(180/3.141592)); // see global dist comment
     }else{
-        return 90+atan((centerline - centermargin)/dist); // see global dist comment
+        return 90+(atan(((temp*1.25)/((centermargin-rightmargin)*dist)))*(180/3.141592)); // see global dist comment
     }
 }
 

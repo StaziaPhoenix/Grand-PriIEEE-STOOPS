@@ -27,6 +27,7 @@ private:
     int centermargin;
     int rightlinedetect;
     int leftlinedetect;
+    float dist;    
 
     bool thresholdImage();
     bool analyzeImg( int & rightline, int & leftline);
@@ -53,6 +54,7 @@ public:
         iLowV = 182;
         iHighV = 255;
 
+        dist = (9)*tan(62);
         rightlinedetect = 0;
         leftlinedetect = 0;
         
@@ -67,6 +69,6 @@ public:
     short getRLineDetect() const;
     short getLLineDetect() const;
 
-    short errorDetect(); 
+    unsigned char errorDetect(); 
     
 };
