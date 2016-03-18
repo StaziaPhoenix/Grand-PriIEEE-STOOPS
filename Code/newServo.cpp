@@ -1,11 +1,26 @@
-/* fopen example */
 #include <stdio.h>
-int main () {
-  FILE * file;
-  file = fopen ("/dev/servoblaster","w+");
-  fprintf(file, "0=70%\n");
-  fprintf(stdout,"0=70%\n");
-  fclose (file);
+#include <stdlib.h>
+#include <unistd.h>
 
+void setAngle(double angle) {
+  FILE * file;
+  static double divisor = 1.8;
+  file = fopen ("/dev/servoblaster","w+");
+  
+  double percent = angle/divisor;
+  fprintf(file, "0=%f%\n", percent);
+  fprintf(stdout,"0=%f%\n", percent);
+  fclose (file);
+}
+
+int main () {
+  int i;
+  for (i = 10; i < 190; i += 10) {
+    fprintf(stdout,"%d: ", i);
+    setAngle(i);
+    sleep(1);
+  }
+  
   return 0;
 }
+
