@@ -54,7 +54,7 @@ public:
         iLowV = 182;
         iHighV = 255;
 
-        dist = (9)*tan(62);
+        dist = (11.5)*tan(62); // theta is arccos(height/hyp)
         rightlinedetect = 0;
         leftlinedetect = 0;
         

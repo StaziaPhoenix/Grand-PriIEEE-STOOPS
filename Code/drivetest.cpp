@@ -44,13 +44,15 @@ int main() {
     }
 */
     ImageAnalyze imganlz;
+    setAngle(90);
+    usleep(10000);
 
     while(1){
         angle = imganlz.errorDetect(); // must encode
         cout << "angle: " << (int)angle << endl;
         setAngle(angle);
         
-        speed = 191;// will be called once we vary speed, for now const ~75%
+//        speed = 191;// will be called once we vary speed, for now const
 
         //cout << "Sending " << (int)speed << endl;
         //write(file, speed, 1);

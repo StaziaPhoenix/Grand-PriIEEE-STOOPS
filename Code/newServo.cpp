@@ -15,7 +15,7 @@ void setAngle(double angle) {
 
 int main () {
   int i;
-  for (i = 10; i < 190; i += 10) {
+  for (i = 45; i < 135; i += 5) {
     fprintf(stdout,"%d: ", i);
     setAngle(i);
     sleep(1);
