@@ -45,8 +45,8 @@ int main() {
 */
     ImageAnalyze imganlz;
 
-    while(1){
-        angle = imganlz.errorDetect(); // must encode
+    while(1) {
+        angle = imganlz.errorDetect();
         cout << "angle: " << (int)angle << endl;
         setAngle(angle);
         
@@ -66,6 +66,6 @@ int main() {
         if ( (int) killFlag[0] == 1 ) {
             close(file);
             return 0;
-        }*/ 
+        } --------------------- */ 
    }
 }
