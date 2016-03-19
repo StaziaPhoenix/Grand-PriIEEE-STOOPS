@@ -90,9 +90,9 @@ unsigned char ImageAnalyze::errorDetect(){
     if( centerline == centermargin ){
         return 90;
     }else if( centerline < centermargin ){
-        return 90+(atan(((temp*1.25)/((rightmargin-centermargin)*dist)))*(180/3.141592)); // see global dist comment
+        return 90+(atan(((temp*1.25/((rightmargin-centermargin)*dist)))*180/3.141592)); // see global dist comment
     }else{
-        return 90-(atan(((temp*1.25)/((centermargin-rightmargin)*dist)))*(180/3.141592)); // see global dist comment
+        return 90-(atan(((temp*1.25)/((centermargin-rightmargin)*dist)))*180/3.141592)); // see global dist comment
     }
 }
 

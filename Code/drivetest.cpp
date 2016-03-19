@@ -21,7 +21,6 @@ void setAngle(double angle) {
   
   double percent = angle/divisor;
   fprintf(file, "0=%f%\n", percent);
-  fprintf(stdout,"0=%f%\n", percent);
   fclose (file);
 }
 
@@ -45,8 +44,7 @@ int main() {
 */
     ImageAnalyze imganlz;
     setAngle(90);
-    usleep(10000);
-
+    
     while(1) {
         angle = imganlz.errorDetect();
         cout << "angle: " << (int)angle << endl;
