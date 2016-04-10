@@ -6,20 +6,23 @@
 #include <sys/ioctl.h>
 #include <fcntl.h>
 
-#define ADDRESS 0x04 // need to dynamically discover real each boot
+//#define ADDRESS 0x04 // need to dynamically discover real each boot
 
-static const char *devName = "/dev/i2c-1";
+//static const char *devName = "/dev/i2c-1";
 
 //char killFlag[1] = 0;
 unsigned char speed;
 unsigned char angle;
+unsigned char prev_angle = 0;
+const float kP = 1.3;
+const float kD = 0;
 
-void setAngle(double angle) {
+void setAngle(float angle) {
   FILE * file;
-  static double divisor = 1.8;
+  static float divisor = 1.8;
   file = fopen ("/dev/servoblaster","w+");
   
-  double percent = angle/divisor;
+  float percent = angle/divisor;
   fprintf(file, "0=%f%\n", percent);
   fprintf(stdout,"0=%f%\n", percent);
   fclose (file);
@@ -47,13 +50,14 @@ int main() {
 
     while(1){
         angle = imganlz.errorDetect(); // must encode
-        cout << "angle: " << (int)angle << endl;
-        setAngle(angle);
+        cout << "angle: " << angle << endl;
+        setAngle(kP*angle + kD*(angle-prev_angle));
+        angle = prev_angle;
         
-        speed = 191;// will be called once we vary speed, for now const ~75%
+        // speed = 191;// will be called once we vary speed, for now const ~75%
 
-        //cout << "Sending " << (int)speed << endl;
-        //write(file, speed, 1);
+        // cout << "Sending " << (int)speed << endl;
+        // write(file, speed, 1);
 
 
         /* --------------------
